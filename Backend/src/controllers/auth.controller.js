@@ -52,19 +52,6 @@ async function registerController (req, res)  {
   const { email, username, password, bio, profileImage, isPrivate } = req.body
   console.log(req.body)
 
-  // const isUserExistByEmail = await  userModel.findOne({email})
-  // if(isUserExistByEmail){
-  //   return res.status(409).json({
-  //     message : "email already exist"
-  //   })
-  // }
-
-  // const isUserExistByUsername = await userModel.findOne({username})
-  // if(isUserExistByUsername){
-  //   return res.status(409).json({
-  //     message : "username already exist"
-  //   })
-  // }
 
   const isUserExist = await userModel.findOne({
     $or: [
@@ -109,4 +96,3 @@ module.exports = {
   loginController
 }
 
-// 04-instagram-clone-backend
