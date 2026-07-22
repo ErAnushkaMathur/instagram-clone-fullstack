@@ -1,39 +1,37 @@
-const postModel = require("../models/postModel")
-const ImageKit = require("@imagekit/nodejs")
-const { toFile } = require("@imagekit/nodejs")
-const jwt = require("jsonwebtoken")
-const likeModel = require("../models/likeModel")
+  const postModel = require("../models/postModel")
+  const ImageKit = require("@imagekit/nodejs")
+  const { toFile } = require("@imagekit/nodejs")
+  const jwt = require("jsonwebtoken")
+  const likeModel = require("../models/likeModel")
 
-const imagekit = new ImageKit({
-  privateKey: process.env.IMAGEKIT_PRIVATE_KEY
-})
-
-async function createPostController(req, res) {
-
-  console.log(decoded);
-
-  const file = await imagekit.files.upload({
-    file: await toFile(Buffer.from(req.file.buffer), 'file'),
-    fileName: "Test",
-    folder: "insta-clone"
+  const imagekit = new ImageKit({
+    privateKey: process.env.IMAGEKIT_PRIVATE_KEY
   })
 
-  const post = await postModel.create({
-    caption: req.body.caption,
-    imgUrl: file.url,
-    user: req.user.id
+  async function createPostController(req, res) {
 
-  })
-  res.status(201).json({
-    message: "post created successfully",
-    post
-  })
+    console.log(req.user);
 
-}
+    const file = await imagekit.files.upload({
+      file: await toFile(Buffer.from(req.file.buffer), 'file'),
+      fileName: "Test",
+      folder: "insta-clone"
+    })
 
-async function getPostCotroller(req, res) {
+    const post = await postModel.create({
+      caption: req.body.caption,
+      imgUrl: file.url,
+      user: req.user.id
 
-  
+    })
+    res.status(201).json({
+      message: "post created successfully",
+      post
+    })
+
+  }
+
+async function getPostController(req, res) {
 
   const userId = req.user.id
 
@@ -125,10 +123,20 @@ async function unlikePostController(req,res){
    })
    }
 
+   async function getFeedController(req,res){
+    const posts = await postModel.find().populate("user")
+
+    return res.status(200).json({
+      message : "Feed fetched successfully",
+      posts
+    })
+   }
+
 module.exports = {
   createPostController,
-  getPostCotroller,
+  getPostController,
   getPostDetailsController,
   likePostController,
-  unlikePostController
+  unlikePostController,
+  getFeedController
 }

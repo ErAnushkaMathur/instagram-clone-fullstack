@@ -22,10 +22,10 @@ export async function register(username, email , password){
   }
 }
 
-export async function login(email, password){
+export async function login(username, password){
   try{
-    const respnse = await api.post("/login",{
-    email,
+    const response = await api.post("/login",{
+    username,
     password,
     })
      return response.data
@@ -43,5 +43,14 @@ export async function getMe(){
   }
   catch(err){
     throw err
+  }
+}
+
+export async function getFeed() {
+  try {
+    const response = await api.get("/feed");
+    return response.data;
+  } catch (err) {
+    throw err;
   }
 }

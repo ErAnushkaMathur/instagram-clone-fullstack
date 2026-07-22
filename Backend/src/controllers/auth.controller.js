@@ -2,8 +2,12 @@ const userModel = require("../models/userModel")
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcryptjs")
 const crypto = require("crypto")
+
+
 async function loginController (req, res)  {
+  console.log(req.body);
   const { email, username, password , isPrivate} = req.body
+  
   const user = await userModel.findOne({
     $or: [
       {
@@ -13,8 +17,7 @@ async function loginController (req, res)  {
         username: username
       }
     ]
-  }
-  )
+  }).select("+password")
 
   if(!user){
     return res.status(404).json({

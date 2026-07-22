@@ -8,10 +8,10 @@ export function AuthProvider({children}){
   const [user , setUser] = useState(null)
   const [loading , setLoading] = useState(false)
 
-  const handleLogin = async (username, password) => {
+  const handleLogin = async (email, password) => {
     setLoading(true)
     try{
-        const response = await login(username, email, password)
+        const response = await login(email, password)
         setUser(response.user)
     }
     catch(err){
@@ -39,7 +39,6 @@ export function AuthProvider({children}){
   return (
     <AuthContext.Provider value = {{user, loading , handleLogin, handleRegister}}>
       {children}
-      console.log("rendered")
     </AuthContext.Provider>
   )
 }
