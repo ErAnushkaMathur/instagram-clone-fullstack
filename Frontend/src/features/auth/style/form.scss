@@ -32,6 +32,10 @@ main{
       background-color: #cf3a3a;
       color: whitesmoke;
       cursor: pointer;
+      transition: transform 0.1s ease;
+       &:active {
+      transform: scale(0.95);
+    }
     }
   }
   .toggleAuthForm{

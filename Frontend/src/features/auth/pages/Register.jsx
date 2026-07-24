@@ -3,11 +3,14 @@ import "../style/form.scss";
 import { Link } from "react-router";
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -54,7 +57,9 @@ const Register = () => {
             name="password"
             placeholder="Enter your password"
           />
-          <button type="submit">Register</button>
+          <button onClick={() => navigate("/login")}>
+  Register
+</button>
         </form>
         <p>
           Already have an account?{" "}
