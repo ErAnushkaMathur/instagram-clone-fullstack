@@ -16,7 +16,7 @@ const Register = () => {
     e.preventDefault();
 
     axios
-      .post("http://localhost:3000/api/auth/register", {
+      .post("https://instagram-clone-fullstack-qelz.onrender.com/api/auth/register", {
         username,
         email,
         password,
