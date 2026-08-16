@@ -5,7 +5,7 @@ const crypto = require("crypto")
 
 
 async function loginController (req, res)  {
-  console.log(req.body);
+ 
   const { email, username, password , isPrivate} = req.body
   
   const user = await userModel.findOne({
@@ -38,8 +38,11 @@ async function loginController (req, res)  {
     username : user.username
   },process.env.JWT_SECRET,{expiresIn:"1d"})
 
-  res.cookie("token" ,token)
-
+  res.cookie("token" ,token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none"
+  })
   res.status(200).json({
     message : "user loggedIn successfully",
     user:{
@@ -64,7 +67,7 @@ async function registerController (req, res)  {
   })
   if (isUserExist) {
     return res.status(409).json({
-      message: "user already exist  "(isUserExist).email == email ? "email already exist" : "username already exist"
+      message: (isUserExist).email == email ? "email already exist" : "username already exist"
     })
   }
 
@@ -80,7 +83,11 @@ async function registerController (req, res)  {
 
 
 
-  res.cookie("token", token)
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none"
+  })
   res.status(201).json({
     message: "user registered successfully",
     user: {

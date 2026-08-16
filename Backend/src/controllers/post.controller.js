@@ -85,7 +85,7 @@ async function likePostController(req , res){
       })
    }
 
-   const like = await likeModel.create({
+   const like = await likeModel.create({  
     post : postId,
     user : username 
    })
@@ -126,9 +126,23 @@ async function unlikePostController(req,res){
    async function getFeedController(req,res){
     const posts = await postModel.find().populate("user")
 
+      const postsWithLikeStatus = await Promise.all(
+        posts.map(async (post) => {
+            const like = await likeModel.findOne({
+                post: post._id,
+                user: req.user.username
+            });
+
+            return {
+                ...post.toObject(),
+                isLiked: !!like
+            };
+        })
+    );
+
     return res.status(200).json({
       message : "Feed fetched successfully",
-      posts
+      posts : postsWithLikeStatus
     })
    }
 
