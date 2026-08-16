@@ -7,7 +7,7 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
   credentials:true,
-  origin:"https://instagram-clone-fullstack-three.vercel.app/"
+  origin:"https://instagram-clone-fullstack-three.vercel.app"
 }))
 
 /*require routes*/

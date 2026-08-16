@@ -3,6 +3,7 @@ import Login from "./features/auth/pages/Login"
 import Register from "./features/auth/pages/Register"
 import Feed from "./features/posts/pages/Feed"
 import CreatePost from "./features/posts/pages/CreatePost"
+import ProtectedRoutes from "./features/auth/components/ProtectedRoutes"
 
 
 export const router = createBrowserRouter([
@@ -16,10 +17,10 @@ export const router = createBrowserRouter([
     },
     {
         path: '/',
-        element: <Feed />
+        element: <ProtectedRoutes><Feed /></ProtectedRoutes>
     },
     {
         path: "/create-post",
-        element: <CreatePost />
+        element: <ProtectedRoutes><CreatePost /></ProtectedRoutes>
     }
 ])

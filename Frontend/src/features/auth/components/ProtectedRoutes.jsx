@@ -1,0 +1,25 @@
+import { useState, useEffect } from "react";
+import { Navigate } from "react-router";
+import { getMe } from "../services/auth.api";
+
+export default function ProtectedRoutes({ children }) {
+    const [loading, setLoading] = useState(true);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    useEffect(() => {
+        getMe()
+            .then(() => setIsAuthenticated(true))
+            .catch(() => setIsAuthenticated(false))
+            .finally(() => setLoading(false));
+    }, []);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (!isAuthenticated) {
+        return <Navigate to="/login" replace />;
+    }
+
+    return children;
+}
