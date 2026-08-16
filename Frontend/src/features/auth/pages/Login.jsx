@@ -21,6 +21,16 @@ const Login = () => {
         navigate('/')
 
     }
+     const handleDemoLogin = async () => {
+    const demoUsername = "recruiter_demo";
+    const demoPassword = "Demo@123";
+
+    setUsername(demoUsername);
+    setPassword(demoPassword);
+
+    await handleLogin(demoUsername, demoPassword);
+    navigate("/");
+};
 
     if (loading) {
         return (<main>
@@ -48,6 +58,10 @@ const Login = () => {
                         id='password'
                         placeholder='Enter password' />
                     <button className='button primary-button' >Login</button>
+                    <p>Recruiter? Try the demo account:</p>
+                    <button type="button" onClick={handleDemoLogin}>
+  Use Demo Account
+</button>
                 </form>
                 <p>Don't have an account ? <Link to={"/register"} >Create One.</Link></p>
             </div>
